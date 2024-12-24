@@ -1,9 +1,7 @@
-library(googlesheets4)
-library(tidyverse)
-library(tm) # to process the text
-library(wordcloud) # to make the wordcloud
-library(RColorBrewer) # to make the word cloud
-library(stopwords)
+install.packages('pacman')
+library(pacman)
+p_load(googlesheets4,tidyverse,tm,wordcloud,RColorBrewer,stopwords)
+
 
 
 urt <- read_sheet("https://docs.google.com/spreadsheets/d/1c3ecR6iBXZtTZydkzK8V8OVq-Q-_Bv0W0egmGovvjDQ/edit?gid=0#gid=0", sheet = 'artikelindeks', col_names = T) |> 
@@ -75,6 +73,6 @@ wordcloud(words = df_final$word,
           max.words = 120, 
           random.order = FALSE, 
           rot.per = 0.5, 
-          colors = brewer.pal(8, "Set1"))
+          colors = brewer.pal(8, "Dark2"))
 
 brewer.pal(n = 8, name = "Dark2")
