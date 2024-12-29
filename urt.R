@@ -60,7 +60,6 @@ df_case <- df %>%
 df_final <- merge(df_agg, df_case, by = "tolower(word)")
 
 
-
 # Clean up the final dataframe
 df_final <- df_final[, c("original_word", "freq")]
 colnames(df_final) <- c("word", "freq")
