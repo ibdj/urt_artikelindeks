@@ -5,10 +5,24 @@ library(googlesheets4)
 library(tm)
 p_load(wordcloud,RColorBrewer,stopwords)
 
-
-
 urt <- read_sheet("https://docs.google.com/spreadsheets/d/1c3ecR6iBXZtTZydkzK8V8OVq-Q-_Bv0W0egmGovvjDQ/edit?gid=0#gid=0", sheet = 'artikelindeks', col_names = T) |> 
-  mutate(sider_pr_forfatter = round(`antal sider`/`antal forfattere`,2) )
+  mutate(sider_pr_forfatter = round(`antal sider`/`antal forfattere`,2)) |> 
+  filter(!is.na(år))
+
+summary(urt)
+names(urt)
+
+publication_numbers <- urt |> 
+  distinct(år, årgang, nummer) |> 
+  arrange(år,årgang, nummer) |>   # sort order: newest (top) first
+  ungroup()
+  
+publication_numbers <- publication_numbers |> 
+  mutate(udgivelse_no = row_number())
+
+urt <- urt |> 
+  left_join(publication_numbers, by = c("år", "årgang","nummer"))
+
 
 urt_longer <- urt |> 
   pivot_longer(cols = forfatter1:forfatter14, names_to = "level", values_to = "forfatter_navn") |> 
