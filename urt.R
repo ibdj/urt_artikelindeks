@@ -1,6 +1,9 @@
 install.packages('pacman')
 library(pacman)
-p_load(googlesheets4,tidyverse,tm,wordcloud,RColorBrewer,stopwords)
+library(tidyverse)
+library(googlesheets4)
+library(tm)
+p_load(wordcloud,RColorBrewer,stopwords)
 
 
 
